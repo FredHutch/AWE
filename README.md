@@ -1,18 +1,20 @@
 # Workflow Manager Project for hackathon
+Workflow here is defined as a series of individual jobs that are part of a single procedure performed on a dataset, which is intended to be subject to the same version control.  The intent is to facilitate reproducible workflow jobs.  
 
 ## Assumptions
 
 1. Workflow execution will be done using cromwell and will happen on AWS Batch.
-1. All data will be in S3 Buckets.
+1. All source and reference data will be in S3 Buckets.
 1. Each user will have separate AWS child accounts.
-1. Workflow and workflow config will be in git repos.
+1. Workflow and inputs will be in GitHub repos. Allow for those repo's to be private.
 
 ## A base user experience for FH-AWE (Fred Hutch Adaptive Workflow Engine)
 
-1. The user creates a workflow and job definition.
-1. The user starts a job.
-1. The user gets the status of a running or completed job.
-1. The user cancels a running job.
+1. The user creates a workflow definition, defines inputs, and pushes to GitHub.
+1. The user starts one workflow job (or an array of them?).  
+1. The user gets the status of any of their running or completed workflow jobs.
+1. The user cancels a running workflow job.
+1. The user receives workflow job failure information and restarts workflow job.  
 
 ## What the backend needs to do
 
@@ -21,11 +23,11 @@ All requests must be authenticated with Active Directory.
 * Create workflow
     * persistent store user, name, git repo of workflow
     * persistent store job definition as related to named workflow
-* Start job
-    * execute cromwell on AWS Batch (probably a cromwell job that then launches the additional job jobs?)
+* Start workflow job
+    * execute cromwell on AWS Batch (probably a cromwell workflow job that then launches the individual jobs?)
     * update persistent state (cromwell may do this)
 * Job Status
-    * retrieve job metadata from persistent state
+    * retrieve (workflow?) job metadata from persistent state
 * Cancel job
     * retrieve data from persistent state to verify job state
     * halt job in AWS Batch/cromwell
