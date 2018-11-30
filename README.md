@@ -1,5 +1,5 @@
 # Workflow Manager Project for hackathon
-Workflow here is defined as a series of individual jobs that are part of a single procedure performed on a dataset, which is intended to be subject to the same version control.  The intent is to facilitate reproducible workflow jobs.  
+Workflow here is defined as a series of individual jobs that are part of a single procedure performed on a dataset, which are intended to be subject to the same version control.  The intent is to facilitate reproducible workflow jobs.  
 
 ## Assumptions
 
