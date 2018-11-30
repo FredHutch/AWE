@@ -1,8 +1,8 @@
 ## Overview of the workflow to be run
 
-Inputs:  Directory (prefix) containing all/only the relevant paired FASTQ's for a specific sample S3, and some reference files!!
-Process: Concatenate, make into uBAM, then do GATK Best Practices pre-processing for variant calling
-Output: A clean BAM file ready for downstream variant calling and it's index.
+**Inputs:**  Directory (prefix) containing all/only the relevant paired FASTQ's for a specific sample S3, and some reference files!!
+**Process:** Get all relevant files from S3, concatenate, make into uBAM, then do GATK Best Practices pre-processing for variant calling.
+**Output:** A clean BAM file ready for downstream variant calling and it's index written back to S3. 
 
 ### Sample data information
 Prefix for containing all the fastq's for this sample in S3:
@@ -11,6 +11,8 @@ Prefix for containing all the fastq's for this sample in S3:
 
 Example Forward read filename:
 `CM-M50-O50-B1_CGAACTTA_L001_R1_001.fastq.gz`
+
+
 Example Reverse read filename:
 `CM-M50-O50-B1_CGAACTTA_L001_R2_001.fastq.gz`
 
