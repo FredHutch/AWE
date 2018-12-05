@@ -3,7 +3,7 @@ Workflow here is defined as a series of individual jobs that are part of a singl
 
 ## Assumptions
 
-1. Workflow execution will be done using cromwell and will happen on AWS Batch.
+1. Workflow execution will be done using cromwell[1] and will happen on AWS Batch.
 1. Workflow, config, and inputs will be in Git repos; inputs and reference data will be in S3 Buckets.
 1. Each user will have separate IAM users in AWS child accounts of the Fred Hutch main AWS account.
 
@@ -68,3 +68,8 @@ POST /bmcgough/kallisto_20181205 '{ "workflow_repo": "http://github.com/FredHutc
 DELETE /bmcgough/kallisto_20181205
 GET /bmcgough/kallisto_20181205/api/workflows/{version}/kallisto_20181205/status
 ```
+
+1. *Why Cromwell?*
+Their logo for one:
+
+   ![CR0M-w311](https://github.com/broadinstitute/cromwell/raw/develop/docs/jamie_the_cromwell_pig.png)
