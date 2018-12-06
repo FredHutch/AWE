@@ -1,9 +1,5 @@
 ## Copyright Broad Institute, 2018
 ####################
-## Edit to original GATK WDL to include FH-specific steps including:
-## - concatenate fastq's
-## - create uBAM
-####################
 ##
 ##
 ##
