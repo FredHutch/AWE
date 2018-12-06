@@ -2,7 +2,7 @@
   "##_COMMENT1": "SAMPLE NAME AND UNMAPPED BAMS",
   "PreProcessingForVariantDiscovery_GATK4.sample_name": "CM-M50-O50-R1",
   "PreProcessingForVariantDiscovery_GATK4.ref_name": "hg38",
-  "PreProcessingForVariantDiscovery_GATK4.flowcell_unmapped_bams_list": "gs://gatk-test-data/wgs_ubam/NA12878_24RG/NA12878_24RG_small.txt",
+  "PreProcessingForVariantDiscovery_GATK4.flowcell_unmapped_bams_list": "s3://fh-pi-paguirigan-a/hackathon2018/rawData/listofbams.txt",
   "PreProcessingForVariantDiscovery_GATK4.unmapped_bam_suffix": ".bam",
   "##_COMMENT2": "REFERENCE FILES",
   "PreProcessingForVariantDiscovery_GATK4.ref_dict": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/v0/Homo_sapiens_assembly38.dict",
