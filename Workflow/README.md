@@ -16,7 +16,7 @@ All reference data files used in these workflows are in S3:
 `bundle/hg38/`
 
 
-
+The workflow came from: https://github.com/gatk-workflows/gatk4-data-processing
 
 
 
