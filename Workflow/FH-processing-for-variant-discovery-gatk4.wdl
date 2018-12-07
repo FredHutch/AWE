@@ -313,10 +313,7 @@ task SamToFastqAndBwaMem {
 			INPUT=${input_bam} \
 			FASTQ=/dev/stdout \
 			INTERLEAVE=true \
-			NON_PF=true \
-    | \
-		${bwa_path}${bwa_commandline} /dev/stdin -  2> >(tee ${output_bam_basename}.bwa.stderr.log >&2) \
-    | \
+			NON_PF=true | ${bwa_path}${bwa_commandline} /dev/stdin -  2> >(tee ${output_bam_basename}.bwa.stderr.log >&2) | 
 		samtools view -1 - > ${output_bam_basename}.bam
 
   >>>
