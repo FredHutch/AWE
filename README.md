@@ -1,4 +1,39 @@
 # FH-AWE: a Workflow Manager Project for hackathon
+
+Goal of project: To build infrastructure on top
+of an existing workflow engine ([Cromwell](https://cromwell.readthedocs.io/en/stable/)) to make it easier to use.
+
+## Background:
+
+Cromwell can be run on the command line or as a RESTful server.
+However, it is not meant to be used in a multi-user environment (it has no notion of users and no authentication/authorization). This project would enable multiple users
+to use Cromwell.
+
+
+### Components
+
+* Server. Runs in AWS Lambda and is accessible through API Gateway. Recommend using [Zappa](https://github.com/miserlou/zappa) to develop a  [RESTful](https://flask-restful.readthedocs.io/en/latest/) [Flask](http://flask.pocoo.org/) application in Python which "lives" in Lamda.
+* Fleet of Cromwell servers. Since Cromwell can't handle different users, each time a distinct user shows up, we need
+to spin up a new Cromwell server for that user (if there isn't one already running). We'd like to respond to the user in a reasonable time so rather than starting the new server in AWS Batch, we thought we would start it in ECS. 
+* AWS Batch Compute environment. When a user submits a job
+  to Cromwell, Cromwell will run it in AWS Batch. This
+  requires that some [CloudFormation stacks](https://docs.opendata.aws/genomics-workflows/aws-batch/configure-aws-batch-cfn/) be run in order to set up the AWS Account beforehand.
+* Databases. Each instance of Cromwell (one for each user)
+  needs to have its own database (MariaDB-compatible), presumably in RDS. Each time a user logs in who has not
+  logged in before, we will need to create a database for them.
+
+### Functionality
+
+
+
+### Design goals
+
+* Integration with Active Directory for authentication. 
+  Ultimately we would like to hook up to Fred Hutch's
+  AD (in Azure) but we can use a "fake" AD server for today.
+*   
+
+
 Workflow here is defined as a series of individual jobs that are part of a single procedure performed on a dataset, which are intended to be subject to the same version control.  The intent is to facilitate reproducible workflow jobs.  
 
 ## Assumptions
