@@ -63,3 +63,23 @@ Broad [WDL Tutorials](https://software.broadinstitute.org/wdl/documentation/topi
 [GATK Workflows](https://github.com/gatk-workflows?language=wdl)
 
 [WDL Viewer Package](https://atom.io/packages/atom-wdl-viewer) for Atom
+
+
+
+
+### Public Data sets
+
+[Google Genomics data](https://cloud.google.com/genomics/docs/public-datasets/)
+
+[AWS Public Data Repository](https://aws.amazon.com/opendata/)
+
+
+Sage Bionetworks [Synapse Open Projects](https://www.synapse.org/#!StandaloneWiki:OpenResearchProjects)
+
+Sage Bionetworks [Synapse Research Communities](https://www.synapse.org/#!StandaloneWiki:ResearchCommunities)
+
+
+
+[dbGAP access](https://www.ncbi.nlm.nih.gov/gap)
+
+[cBioPortal](http://www.cbioportal.org/)
