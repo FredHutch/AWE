@@ -13,7 +13,7 @@
   "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_amb": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta.gz.amb",
   "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_bwt": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta.gz.bwt",
   "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_ann": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta.gz.ann",
-  "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_pac": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta..gz.pac",
+  "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_pac": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta.gz.pac",
   "##_COMMENT3": "KNOWN SITES RESOURCES",
   "PreProcessingForVariantDiscovery_GATK4.dbSNP_vcf": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/Homo_sapiens_assembly38.dbsnp138.vcf",
   "PreProcessingForVariantDiscovery_GATK4.dbSNP_vcf_index": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.dbsnp138.vcf.idx",
