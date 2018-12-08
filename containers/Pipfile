@@ -1,0 +1,26 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+pylint = "*"
+ipython = "*"
+black = "*"
+
+
+[packages]
+
+flask = "*"
+sh = "*"
+"boto3" = "*"
+flask-restful = "*"
+"urllib3" = "*"
+gunicorn = "*"
+psutil = "*"
+awscli = "*"
+mysqldb = "*"
+hammock = "*"

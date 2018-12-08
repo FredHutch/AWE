@@ -1,0 +1,6 @@
+containers/setup.sh
+containers/aws.conf
+containers/notes.txt
+containers/__pycache__
+containers/.vscode
+containers/*.jar
