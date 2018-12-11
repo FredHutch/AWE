@@ -425,16 +425,18 @@ task SortAndFixTags {
     ${gatk_path} --java-options "-Dsamjdk.compression_level=${compression_level} ${java_opt_sort}" \
       SortSam \
       --INPUT ${input_bam} \
-      --OUTPUT /dev/stdout \
+      --OUTPUT /cromwell_root/atempfile \
       --SORT_ORDER "coordinate" \
       --CREATE_INDEX false \
-      --CREATE_MD5_FILE false | ${gatk_path} --java-options "-Dsamjdk.compression_level=${compression_level} ${java_opt_fix}" \
+      --CREATE_MD5_FILE false 
+   ${gatk_path} --java-options "-Dsamjdk.compression_level=${compression_level} ${java_opt_fix}" \
       SetNmAndUqTags \
-      --INPUT /dev/stdin \
+      --INPUT /cromwell_root/atempfile \
       --OUTPUT ${output_bam_basename}.bam \
       --CREATE_INDEX true \
       --CREATE_MD5_FILE true \
       --REFERENCE_SEQUENCE ${ref_fasta}
+  rm /cromwell_root/atempfile
   >>>
 
   runtime {
