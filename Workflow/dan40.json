@@ -1,6 +1,6 @@
 {
   "##_COMMENT1": "SAMPLE NAME AND UNMAPPED BAMS",
-  "Dan.input_bam": "s3://fh-pi-paguirigan-a/cromwell-tests/PreProcessingForVariantDiscovery_GATK4/d2eaf18d-2bbf-48b7-82e4-9ebad15ac25d/call-MarkDuplicates/CM-M40-O40-K20-R1.hg38.aligned.unsorted.duplicates_marked.bam",
+  "Dan.input_bam": " s3://fh-pi-paguirigan-a/hackathon2018/rawData/dan/CM-M40-O40-K20-R1.hg38.aligned.unsorted.duplicates_marked.bam",
   "Dan.sample_name": "CM-M40-O40-K20-R1",
   "Dan.ref_name": "hg38",
   "Dan.flowcell_unmapped_bams_list": "s3://fh-pi-paguirigan-a/hackathon2018/CM-M40-O40-K20-R1.unmappedbamslist.txt",
