@@ -570,7 +570,7 @@ task BaseRecalibrator {
 
     ${gatk_path} --java-options "${java_opt}" \
       BaseRecalibrator \
-      -R ${gunzipped_ref_fasta} \
+      -R $gunzipped_ref_fasta \
       -I ${input_bam} \
       --use-original-qualities \
       -O ${recalibration_report_filename} \
