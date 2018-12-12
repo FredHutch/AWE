@@ -567,12 +567,13 @@ task BaseRecalibrator {
 
   command {
 
-    gunzip ${ref_fasta}
+    # gunzip ${ref_fasta}
+    zcat ${ref_fasta} > /cromwell_root/ref.fasta
 
 
     ${gatk_path} --java-options "${java_opt}" \
       BaseRecalibrator \
-      -R ${ref_fasta_without_suffix} \
+      -R /cromwell_root/ref.fasta \
       -I ${input_bam} \
       --use-original-qualities \
       -O ${recalibration_report_filename} \
