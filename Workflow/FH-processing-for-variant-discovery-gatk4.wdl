@@ -563,17 +563,14 @@ task BaseRecalibrator {
   String gatk_path
   String java_opt
 
-  String ref_fasta_without_suffix = sub(ref_fasta, ".gz", "")
-
   command {
 
-    # gunzip ${ref_fasta}
-    zcat ${ref_fasta} > /cromwell_root/ref.fasta
-
+    gunzip ${ref_fasta}
+    gunzipped_ref_fasta=$(echo ${ref_fasta} | sed "s/\.gz//")
 
     ${gatk_path} --java-options "${java_opt}" \
       BaseRecalibrator \
-      -R /cromwell_root/ref.fasta \
+      -R ${gunzipped_ref_fasta} \
       -I ${input_bam} \
       --use-original-qualities \
       -O ${recalibration_report_filename} \
