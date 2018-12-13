@@ -576,7 +576,7 @@ task BaseRecalibrator {
       -O ${recalibration_report_filename} \
       --known-sites ${dbSNP_vcf} \
       --known-sites ${sep=" --known-sites " known_indels_sites_VCFs} \
-      -L ${sep=" -L " sequence_group_interval}
+       -L ${write_lines(sequence_group_interval)}
   }
   runtime {
     preemptible: preemptible_tries
