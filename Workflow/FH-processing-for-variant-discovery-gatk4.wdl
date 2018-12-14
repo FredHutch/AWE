@@ -50,6 +50,8 @@ workflow PreProcessingForVariantDiscovery_GATK4 {
   File ref_fasta_index
   File ref_dict
 
+  File baserecal_bed_file
+
   String bwa_commandline
   Int compression_level
 
@@ -175,7 +177,8 @@ workflow PreProcessingForVariantDiscovery_GATK4 {
         input_bam = SortAndFixTags.output_bam,
         input_bam_index = SortAndFixTags.output_bam_index,
         recalibration_report_filename = base_file_name + ".recal_data.csv",
-        sequence_group_interval = subgroup,
+        # sequence_group_interval = subgroup,
+        baserecal_bed_file = baserecal_bed_file,
         dbSNP_vcf = dbSNP_vcf,
         dbSNP_vcf_index = dbSNP_vcf_index,
         known_indels_sites_VCFs = known_indels_sites_VCFs,
@@ -544,9 +547,10 @@ task CreateSequenceGroupingTSV {
 # Generate Base Quality Score Recalibration (BQSR) model
 task BaseRecalibrator {
   File input_bam
+  File baserecal_bed_file
   File input_bam_index
   String recalibration_report_filename
-  Array[String] sequence_group_interval
+  # Array[String] sequence_group_interval
   File dbSNP_vcf
   File dbSNP_vcf_index
   Array[File] known_indels_sites_VCFs
@@ -576,7 +580,7 @@ task BaseRecalibrator {
       -O ${recalibration_report_filename} \
       --known-sites ${dbSNP_vcf} \
       --known-sites ${sep=" --known-sites " known_indels_sites_VCFs} \
-       -L ${write_lines(sequence_group_interval)}
+       -L ${baserecal_bed_file}
   }
   runtime {
     preemptible: preemptible_tries

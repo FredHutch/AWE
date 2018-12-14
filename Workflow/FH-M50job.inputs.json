@@ -15,6 +15,7 @@
   "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_ann": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta.gz.ann",
   "PreProcessingForVariantDiscovery_GATK4.SamToFastqAndBwaMem.ref_pac": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.fasta.gz.pac",
   "##_COMMENT3": "KNOWN SITES RESOURCES",
+  "PreProcessingForVariantDiscovery_GATK4.baserecal_bed_file": "s3://fh-pi-paguirigan-a/hackathon2018/seqPanelBed/TruSight-One-Illumina/TruSight_One_v1.1.bed",
   "PreProcessingForVariantDiscovery_GATK4.dbSNP_vcf": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.dbsnp138.vcf",
   "PreProcessingForVariantDiscovery_GATK4.dbSNP_vcf_index": "s3://fh-pi-paguirigan-a/hackathon2018/bundle/hg38/Homo_sapiens_assembly38.dbsnp138.vcf.idx",
   "PreProcessingForVariantDiscovery_GATK4.known_indels_sites_VCFs": [
