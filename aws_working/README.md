@@ -23,3 +23,5 @@ The resource names are slightly different for my resources; I didn't want to re-
 I am trying to keep this generic to be able to run other containers on demand. To that end, we will need to parameterize the ECS cluster name as that is not in the user request (task defnintion environment variable?)
 
 I cannot test the proxy as for some reason my task status does not match up with what I am seeing in the console???
+
+Also, the Requirements.txt is probably too big.
