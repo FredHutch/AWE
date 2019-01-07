@@ -4,3 +4,5 @@ containers/notes.txt
 containers/__pycache__
 containers/.vscode
 containers/*.jar
+aws_working/aws.conf
+aws_working/*.jar
