@@ -24,6 +24,7 @@ class CromwellProxyServer(Resource):
 
         url = "{}/api/workflows/{}".format(cromwell_base_url, version)
         # url = "{}/post".format(cromwell_base_url)
+        # FIXME use workflowUrl instead of this (and put in data, not files):
         workflow = requests.get(workflow_url).text
 
         resp = requests.post(
@@ -37,9 +38,9 @@ class CromwellProxyServer(Resource):
             },
         )
 
-        import IPython
+        # import IPython
 
-        IPython.embed()
+        # IPython.embed()
 
         return {"status": "ok"}
 
