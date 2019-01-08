@@ -1,0 +1,59 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+ipython = "*"
+black = "*"
+pylint = "*"
+
+
+[packages]
+
+"aniso8601" = "==4.0.1"
+argcomplete = "==1.9.3"
+"boto3" = "==1.9.65"
+botocore = "==1.12.65"
+certifi = "==2018.11.29"
+cfn-flip = "==1.1.0.post1"
+chardet = "==3.0.4"
+click = "==7.0"
+docutils = "==0.14"
+durationpy = "==0.5"
+flask = "==1.0.2"
+flask-restful = "==0.3.6"
+future = "==0.16.0"
+hammock = "==0.2.4"
+hjson = "==3.0.1"
+idna = "==2.8"
+itsdangerous = "==1.1.0"
+"jinja2" = "==2.10"
+jmespath = "==0.9.3"
+kappa = "==0.6.0"
+lambda-packages = "==0.20.0"
+markupsafe = "==1.1.0"
+marshmallow = "==3.0.0rc1"
+placebo = "==0.8.2"
+python-dateutil = "==2.6.1"
+python-slugify = "==1.2.4"
+pytz = "==2018.7"
+pyyaml = "==3.13"
+requests = "==2.21.0"
+"s3transfer" = "==0.1.13"
+toml = "==0.10.0"
+tqdm = "==4.19.1"
+troposphere = "==2.3.4"
+unidecode = "==1.0.23"
+"urllib3" = "==1.24.1"
+werkzeug = "==0.14.1"
+wsgi-request-logger = "==0.4.6"
+zappa = "==0.47.1"
+
+
+[requires]
+
+python_version = "3.6"
