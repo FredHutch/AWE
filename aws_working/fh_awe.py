@@ -1,5 +1,5 @@
 from flask import Flask, Response, request
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 
 import requests
 import boto3
@@ -13,39 +13,87 @@ class CromwellProxyServer(Resource):
     def post(self):
         # call me like this:
         # curl -X POST http://localhost:8000/api/workflows/v1 -H "accept: application/json" -H "Content-Type: multipart/form-data"   -F "workflowSource=$(curl --silent https://raw.githubusercontent.com/FredHutch/reproducible-workflows/master/WDL/hello/hello.wdl)"
-        github_repo = request.form["githubRepo"]
-        workflow_source = request.form["workflowSource"]
+        parser = reqparse.RequestParser()
+        # FH-AWE args
+        parser.add_argument("workflowUrl", required=True)  #
+        parser.add_argument("workflowInputsUrl")
+        parser.add_argument("workflowInputs_2Url")
+        parser.add_argument("workflowInputs_3Url")
+        parser.add_argument("workflowInputs_4Url")
+        parser.add_argument("workflowInputs_5Url")
+        parser.add_argument("workflowOptionsUrl")
+        parser.add_argument("labelsUrl")
+        parser.add_argument("workflowDependenciesUrl")
+
+        # Cromwell (non-file) args
+
+        parser.add_argument("workflowOnHold", type=bool)
+        parser.add_argument("workflowOptions")
+        parser.add_argument("workflowType")
+        parser.add_argument("workflowRoot")
+        parser.add_argument("workflowTypeVersion")
+
+        args = parser.parse_args()
+        print(args)
+
+        file_args = [
+            "workflowInputs_2Url",
+            "workflowInputs_3Url",
+            "workflowInputs_4Url",
+            "workflowInputs_5Url",
+            "workflowOptionsUrl",
+            "labelsUrl",
+            "workflowDependenciesUrl",
+        ]
+        non_file_args = [
+            "workflowUrl",
+            "workflowOnHold",
+            "workflowType",
+            "workflowRoot",
+            "workflowTypeVersion",
+        ]
+        data = {}
+
+        for arg in non_file_args:
+            if arg in args and args[arg] is not None:
+                data[arg] = args[arg]
+
+        for arg in file_args:
+            if arg in args and args[arg] is not None:
+                print("haha {}".format(arg))
+                data[arg] = _get_url_contents(args[arg])
+
         # TODO get (optional) input file and other params
         # TODO get username
         # TODO allow support for (non-master) branches in a TBD way
-        workflow_url = _get_github_url(github_repo, workflow_source)
         cromwell_base_url = _get_cromwell_base_url()
         version = _get_version()
 
         url = "{}/api/workflows/{}".format(cromwell_base_url, version)
-        # url = "{}/post".format(cromwell_base_url)
-        # FIXME use workflowUrl instead of this (and put in data, not files):
-        workflow = requests.get(workflow_url).text
 
         resp = requests.post(
             url,
-            files=[("workflowSource", workflow)],
-            # data={"workflowSource": workflow},
+            data=data,
             headers={
                 "accept": "application/json",
-                # "Content-Type": "multipart/form-data",
-                # "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/x-www-form-urlencoded",
             },
         )
+        import IPython
 
-        # import IPython
-
-        # IPython.embed()
-
-        return {"status": "ok"}
+        IPython.embed()
+        return {"message": "ok"}
 
 
 api.add_resource(CromwellProxyServer, "/")
+
+
+def _get_url_contents(url):
+    if "/github.com" in url:
+        url = url.replace("/github.com", "/raw.githubusercontent.com").replace(
+            "/blob/", "/"
+        )
+    return requests.get(url).content
 
 
 def _get_version():
@@ -61,7 +109,7 @@ def _get_cromwell_base_url():
 
 def _slashjoin(args):
     """
-    make sure all arguments are joined
+    Make sure all arguments are joined
     by a single slash, removing leading/trailing
     slashes from args if necessary
     """
