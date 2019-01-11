@@ -124,9 +124,6 @@ class PassThroughApis(Resource):
     def patch(self, version, p1, p2=None):
         pass
 
-    def put(self, version, p1, p2=None):
-        pass
-
 
 api.add_resource(
     PassThroughApis,
