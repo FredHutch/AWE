@@ -1,6 +1,8 @@
 from flask import Flask, Response, request
 from flask_restful import Resource, Api, reqparse
 
+import json
+
 import requests
 import boto3
 
@@ -12,7 +14,7 @@ api = Api(app)
 class CromwellProxyServer(Resource):
     def post(self):
         # call me like this:
-        # curl -X POST http://localhost:8000/api/workflows/v1 -H "accept: application/json" -H "Content-Type: multipart/form-data"   -F "workflowSource=$(curl --silent https://raw.githubusercontent.com/FredHutch/reproducible-workflows/master/WDL/hello/hello.wdl)"
+        # curl -i -X POST http://localhost:5000/   -F "workflowUrl=https://github.com/FredHutch/reproducible-workflows/blob/master/WDL/hello/hello.wdl" -H "Content-Type: multipart/form-data" -H "accept: application/json" -F "workflowInputsUrl=https://github.com/FredHutch/reproducible-workflows/blob/master/WDL/hello/inputs.json" -H "fh-awe-user: dtenenba"
         parser = reqparse.RequestParser()
         # FH-AWE args
         parser.add_argument("workflowUrl", required=True)  #
@@ -34,9 +36,10 @@ class CromwellProxyServer(Resource):
         parser.add_argument("workflowTypeVersion")
 
         args = parser.parse_args()
-        print(args)
+        # print(args)
 
         file_args = [
+            "workflowInputsUrl",
             "workflowInputs_2Url",
             "workflowInputs_3Url",
             "workflowInputs_4Url",
@@ -53,15 +56,22 @@ class CromwellProxyServer(Resource):
             "workflowTypeVersion",
         ]
         data = {}
+        files = []
 
         for arg in non_file_args:
             if arg in args and args[arg] is not None:
+                if arg == "workflowUrl":
+                    args[arg] = _get_raw_url(args[arg])
                 data[arg] = args[arg]
 
         for arg in file_args:
             if arg in args and args[arg] is not None:
-                print("haha {}".format(arg))
-                data[arg] = _get_url_contents(args[arg])
+                files.append((arg.rstrip("Url"), _get_url_contents(args[arg])))
+
+        print("data:")
+        print(data)
+        print("files:")
+        print(files)
 
         # TODO get (optional) input file and other params
         # TODO get username
@@ -70,30 +80,76 @@ class CromwellProxyServer(Resource):
         version = _get_version()
 
         url = "{}/api/workflows/{}".format(cromwell_base_url, version)
+        # url = "{}/post".format(cromwell_base_url)  # httpbin
+
+        # import IPython
+
+        # IPython.embed()
 
         resp = requests.post(
-            url,
-            data=data,
-            headers={
-                "accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
+            url, data=data, files=files, headers={"accept": "application/json"}
         )
-        import IPython
+        try:
+            return resp.json(), resp.status_code
+        except json.decoder.JSONDecodeError:
+            return resp.text, resp.status_code
 
-        IPython.embed()
-        return {"message": "ok"}
 
+class EngineApis(Resource):
+    def get(self, version, action):
+        print("version is {}, action is {}".format(version, action))
+
+        cromwell_base_url = _get_cromwell_base_url()
+        url = "{}{}".format(cromwell_base_url, request.path)
+        resp = requests.get(url, headers={"accept": "application/json"})
+        try:
+            return resp.json(), resp.status_code
+        except json.decoder.JSONDecodeError:
+            return resp.text, resp.status_code
+
+
+class PassThroughApis(Resource):
+    def post(self, version, p1, p2=None):
+        pass
+
+    def get(self, version, p1, p2=None):
+        cromwell_base_url = _get_cromwell_base_url()
+        url = "{}{}".format(cromwell_base_url, request.path)
+        resp = requests.get(url, headers={"accept": "application/json"})
+        try:
+            return resp.json(), resp.status_code
+        except json.decoder.JSONDecodeError:
+            return resp.text, resp.status_code
+
+    def patch(self, version, p1, p2=None):
+        pass
+
+    def put(self, version, p1, p2=None):
+        pass
+
+
+api.add_resource(
+    PassThroughApis,
+    "/api/workflows/<string:version>/<string:p1>",
+    "/api/workflows/<string:version>/<string:p1>/<string:p2>",
+)
+
+api.add_resource(EngineApis, "/engine/<string:version>/<string:action>")
 
 api.add_resource(CromwellProxyServer, "/")
 
 
-def _get_url_contents(url):
+def _get_raw_url(url):
     if "/github.com" in url:
         url = url.replace("/github.com", "/raw.githubusercontent.com").replace(
             "/blob/", "/"
         )
-    return requests.get(url).content
+    return url
+
+
+def _get_url_contents(url):
+    return requests.get(_get_raw_url(url)).content
+    # return requests.get(_get_raw_url(url)).text
 
 
 def _get_version():
