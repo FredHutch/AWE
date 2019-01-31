@@ -30,7 +30,7 @@ to use Cromwell.
 
 ## Architecture
 
-![Architecture diagram](AWE_diagram.png)
+![Architecture diagram](./AWE_diagram.png)
 
 
 ### Components
