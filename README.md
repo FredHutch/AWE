@@ -1,7 +1,7 @@
-# FH-AWE: a Workflow Manager Project for hackathon
+# AWE: a Workflow Environment
 
 Goal of project: To build infrastructure on top
-of an existing workflow engine ([Cromwell](https://cromwell.readthedocs.io/en/stable/)) to make it easier to use.
+of an existing workflow engine ([Cromwell](https://cromwell.readthedocs.io/en/stable/)) to make it simple for researchers to quickly use.
 
 ## Background:
 
@@ -9,10 +9,33 @@ Cromwell can be run on the command line or as a RESTful server.
 However, it is not meant to be used in a multi-user environment (it has no notion of users and no authentication/authorization). This project would enable multiple users
 to use Cromwell.
 
+## Features
+
+* Authenticate with HutchNet ID/Password (against Azure AD).  Status: Not implemented (there are people in HDC who know how to do this)
+* Pull workflow source, input json, etc., directly from GitHub. Status: partially implemented
+* At the end of a successful workflow, remove intermediate files and place output files in a desired location. Status: not implemented, lower priority.
+* CloudFormation or Terraform templates/scripts to set up a new AWS account for use with AWE. Status: not implemented
+* CloudFormation or Terraform templates/scripts to onboard a new user to AWE. Status: not implemented, currently doing manual onboarding.
+* Different back ends - choose to submit workflow to Slurm. Status: Not implemented, lower priority.
+
+## Requirements
+
+* Ability to identify users (at least at the level of groups/labs) who
+  are running AWS Batch jobs, for billing/accounting purposes. Not possible if all users use the same Batch compute environment. (This will be less of an issue when all groups have their own AWS account).
+* Users should not be able to do anything in AWE that they
+  don't have permission to do as themselves. Data and job output
+  should be written to a bucket that users have access to, 
+  and user A should not be able to see user B's data or job output.
+
+
+## Architecture
+
+![Architecture diagram](AWE_diagram.png)
+
 
 ### Components
 
-* Server. Runs in AWS Lambda and is accessible through API Gateway. Recommend using [Zappa](https://github.com/miserlou/zappa) to develop a  [RESTful](https://flask-restful.readthedocs.io/en/latest/) [Flask](http://flask.pocoo.org/) application in Python which "lives" in Lamda.
+* Server. Runs in AWS Lambda and is accessible through API Gateway. Recommend using [Zappa](https://github.com/miserlou/Zappa) to develop a  [RESTful](https://flask-restful.readthedocs.io/en/latest/) [Flask](http://flask.pocoo.org/) application in Python which "lives" in Lambda.
 * Fleet of Cromwell servers. Since Cromwell can't handle different users, each time a distinct user shows up, we need
 to spin up a new Cromwell server for that user (if there isn't one already running). We'd like to respond to the user in a reasonable time so rather than starting the new server in AWS Batch, we thought we would start it in ECS. 
 * AWS Batch Compute environment. When a user submits a job
