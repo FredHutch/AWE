@@ -1,1 +1,0 @@
-s3://fh-pi-paguirigan-a/hackathon2018/rawData/Sample_CM-M50-O50-R1/CM-M50-O50-R1.unmapped.bam
